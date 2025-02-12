@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Milkopots</title>
+    <style>
+
+        *
+        {
+            font-family:'Consolas';
+            font-size: 24px;
+            padding: 0;
+            margin: 0;
+        }
+
+        body 
+        {
+            background-color: lightblue;
+            height: 100dvh;
+            width: 100dvw;
+            overflow: hidden;
+        }
+
+        .container
+        {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .code
+        {
+            background-color: #23272E;
+            padding: 16px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 1px 1px 49px 5px rgba(0,0,0,0.51);
+            -webkit-box-shadow: 1px 1px 49px 5px rgba(0,0,0,0.51);
+            -moz-box-shadow: 1px 1px 49px 5px rgba(0,0,0,0.51);
+        }
+
+        .header 
+        {
+            display: flex;
+            margin-bottom: 16px;
+        }
+
+        .opt 
+        {
+            height: 16px;
+            width: 16px;
+            border-radius: 8px;
+            margin-right: 8px;
+        }
+
+        .opt:nth-child(1)
+        {
+            background-color: #FF5F5A;
+        }
+        
+        .opt:nth-child(2)
+        {
+            background-color: #FFBE2E;
+        }
+        
+        .opt:nth-child(3)
+        {
+            background-color: #2ACA44;
+        }
+
+        .content 
+        {
+            display: flex;
+        }
+
+        .line-num
+        {
+            color: #495162;
+            text-align: right;
+            margin-right: 16px;
+            user-select: none;
+        }
+
+        .code-texts
+        {
+            color: #ABB2BF;
+            line-height: 34px;
+        }
+
+        .kw
+        {
+            color: #CA5BD4;
+        }
+
+        .con
+        {
+            color: #E5C07B;
+        }
+
+        .var
+        {
+            color: #EF596F;
+        }
+
+        .com
+        {
+            color: #7F848E;
+            font-style: italic;
+        }
+
+        .str
+        {
+            color: #89CA78;
+        }
+
+        .num
+        {
+            color: #CE9865;
+        }
+
+        .eq
+        {
+            color: #2BBAC5;
+        }
+
+        .fun
+        {
+            color: #61AFEF;
+        }
+
+        .frm
+        {
+            color: #D19A66;
+        }
+
+        .sel, .close-console
+        {
+            cursor: pointer;
+        }
+
+        .lin
+        {
+            color:yellowgreen;
+        }
+
+        .lin-1
+        {
+            
+            color:royalblue;
+        }
+
+        .sel:hover
+        {
+            color: white;
+            font-weight: bold;
+        }
+
+        .console 
+        {
+            width: 800px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 9;
+            background-color: black;
+            border: 1px solid #3a3c41;
+            border-radius: 8px;
+            text-align: center;
+            transform: translate(-50%, -50%);
+            box-shadow: 1px 1px 49px 5px rgba(0,0,0,0.51);
+            -webkit-box-shadow: 1px 1px 49px 5px rgba(0,0,0,0.51);
+            -moz-box-shadow: 1px 1px 49px 5px rgba(0,0,0,0.51);
+        }
+
+        .console-header 
+        {
+            display: flex;
+            justify-content: end;
+            padding: 10px;
+            cursor: move;
+            z-index: 10;
+            background-color: #3a3c41;
+            color: #fff;
+        }
+
+        .console-body
+        {
+            padding: 16px;
+        }
+
+        .terminal-texts
+        {
+            max-height: 800px;
+            overflow-y: scroll;
+            text-align: start;
+            color: white;
+            line-height: 34px;
+        }
+
+    </style>
+</head>
+<body id='root'>
+
+    <div class='container'>
+        <div class='code'>
+            <div class='header'>
+                <div class='opt'></div>
+                <div class='opt'></div>
+                <div class='opt'></div>
+            </div>
+            <div class='content'>
+                <div class='content-code'>
+                    <p class='code-texts'>
+                        <span class='line-num'>&nbsp;1</span><span class='kw'>import</span> <span class='con'>requests</span><br>
+                        <span class='line-num'>&nbsp;2</span><br>
+                        <span class='line-num'>&nbsp;3</span><span class='com'># ~~~♡♡♡~~~</span><br>
+                        <span class='line-num'>&nbsp;4</span><br>
+                        <span class='line-num'>&nbsp;5</span><span class='var'>prompt</span> <span class='eq'>=</span> <span class='str'>'WILL YOU BE MY VALENTINE? &lt3'</span> <span class='com'># pwease :&lt</span><br>
+                        <span class='line-num'>&nbsp;6</span><span class='var'>answer</span> <span class='eq'>=</span> <span class='str' id='inp'>''</span> <span class='com'># <span class='sel' id='yes-inp'>'Yes'</span> or <span class='sel' id='no-inp'>'No'</span></span><br>
+                        <span class='line-num'>&nbsp;7</span><br>
+                        <span class='line-num'>&nbsp;8</span><span class='com'># ~~~♡♡♡~~~</span><br>
+                        <span class='line-num'>&nbsp;9</span><br>
+                        <span class='line-num'>10</span><span class='var'>api_key</span> <span class='eq'>=</span> <span class='str'>'k3ys1MiLk06r3G2025'</span><br>
+                        <span class='line-num'>11</span><span class='var'>url</span> <span class='eq'>=</span> <span class='kw'>f</span><span class='str'>'https://api.greg.dev/valentines.json?key=<span class='frm'>{</span><span class='var'>api_key</span><span class='frm'>}</span>&prompt=<span class='frm'>{</span><span class='var'>prompt</span><span class='frm'>}</span>&ans=<span class='frm'>{</span><span class='var'>answer</span><span class='frm'>}</span>'</span><br>
+                        <span class='line-num'>12</span><br>
+                        <span class='line-num'>13</span><span class='var'>response</span> <span class='eq'>=</span> <span class='con'>requests</span>.<span class='fun'>get</span>(<span class='var'>url</span>)<br>
+                        <span class='line-num'>14</span><br>
+                        <span class='line-num'>15</span><span class='kw'>if</span> <span class='var'>response</span>.<span class='var'>status_code</span> <span class='eq'>==</span> <span class='num'>200</span>:<br>
+                        <span class='line-num'>16</span>&emsp;&emsp;&emsp;&emsp;<span class='var'>data</span> <span class='eq'>=</span> <span class='var'>response</span>.<span class='fun'>json</span>()<br>
+                        <span class='line-num'>17</span>&emsp;&emsp;&emsp;&emsp;<span class='fun'>print</span>(<span class='var'>data</span>)<br>
+                        <span class='line-num'>18</span><span class='kw'>else</span>:<br>
+                        <span class='line-num'>19</span>&emsp;&emsp;&emsp;&emsp;<span class='fun'>print</span>(<span class='var'>response</span>.<span class='var'>status_code</span>)<br>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    const yesInp = document.getElementById('yes-inp')
+    const noInp = document.getElementById('no-inp')
+    var openConsole = false
+    
+    const delay = (delayInms) => {
+        return new Promise(resolve => setTimeout(resolve, delayInms));
+    }
+
+    async function fetchingDelay() 
+    {  
+        if (openConsole) return
+        openConsole = true;
+
+        document.getElementById('root').insertAdjacentHTML("beforeend",
+            "<div id='console' class='console'>" +
+            "    <div id='console-header' class='console-header'>" +
+            "        <span id='close-console' class='close-console'>✖</span>" +
+            "    </div>" +
+            "    <div class='console-body'>" +
+            "        <p id='terminal-texts' class='terminal-texts'>" +
+            "           <span class='lin'>greg@dev</span>:<span class='lin-1'>~</span>$ py .\\wubmv.py <br>" +
+            "           Fetching request, please wait... <br>" +
+            "           [----------] %0 <br>" +
+            "        </p>" +
+            "    </div>" +
+            "</div>"
+        )
+
+        const closeConsole = document.getElementById('close-console')
+
+        closeConsole.addEventListener('click', function () 
+        {
+            openConsole = false
+            document.getElementById('console').remove()
+        })
+
+        dragElement(document.getElementById('console'));
+
+        let loading = '[----------] %0'
+        for (let i = 0; i <= 10; i++) 
+        {
+            loading = '['
+            
+            while (document.getElementById('terminal-texts').firstChild) document.getElementById('terminal-texts').firstChild.remove()
+                
+            loading = '['
+
+            for (let j = 1; j <= 10; j++)
+            {
+                if (j <= i) loading += '#'
+                else loading += '-'
+            }
+
+            loading += `] %${(i * 10)}`
+
+            document.getElementById('terminal-texts').insertAdjacentHTML("beforeend", 
+                "<span class='lin'>greg@dev</span>:<span class='lin-1'>~</span>$ py .\\wubmv.py <br>" +
+                    "           Fetching request, please wait... <br>" +
+                `<span>${loading}</span><br>`
+            );
+            
+            let delayres = await delay(500);
+        }
+    }
+
+    yesInp.addEventListener('click', async function  ()  
+    {  
+        await fetchingDelay()
+
+        document.getElementById('terminal-texts').insertAdjacentHTML("beforeend", 
+            "<br>" +
+            "               SUCCES: 200 YEYYY!! <br><br>" +
+            "               ⡟⠛⠻⠛⠻⣿⣿⡿⠛⠉⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" +
+            "               ⡇⠐⡀⠂⢁⠟⢁⣠⣶⣿⡄⢹⣿⣿⣿⣿⣿⠿⠿⠛⣉⣉⡄⢹" +
+            "               ⣿⣦⣄⡕⠁⣴⣿⣿⣿⡿⢋⣀⣤⡤⢀⠄⣤⣶⣾⣿⣿⣿⡇⠀" +
+            "               ⣿⣿⡟⢠⣾⣿⣿⣿⣿⠁⢆⣾⣿⡁⢎⣾⣿⣿⣿⣿⣿⣿⡇⢠" +
+            "               ⡿⠟⢠⣿⠟⠻⣿⣿⣿⣿⣾⣿⣿⣶⣾⣿⣿⣿⣿⣿⣿⣿⠃⣸" +
+            "               ⡆⢻⣿⡿⠖⠀⠈⢻⣿⢻⣿⣿⣿⣷⣟⠿⠟⠛⠙⢿⣿⣿⠀⣿" +
+            "               ⢁⣾⣿⣇⣤⣴⣾⣿⣿⣮⣭⣬⣭⣾⣧⢄⠀⠒⢶⣿⣿⣿⠧⠘" +
+            "               ⠀⣿⠛⠡⠂⠀⡀⠈⠙⠟⠉⠉⠀⠀⢍⠺⣷⣦⣾⣿⣿⣿⣦⡉" +
+            "               ⣧⠘⣈⣤⡀⠁⠄⡈⠄⡀⠂⠌⢐⣀⣀⠱⠘⣟⡿⣿⣿⣶⠉⣴" +
+            "               ⡟⢰⣿⣿⣿⠀⠚⠄⠠⠐⢀⠂⣿⣿⣿⣿⣶⣬⡺⣹⢲⡞⠆⢹" +
+            "               ⡇⢸⣿⣿⣟⠀⠀⠂⠁⠀⣂⠀⠹⣿⢿⣿⣿⣿⣿⣷⣭⡀⢴⣿" +
+            "               ⣷⡌⠻⡿⠋⠄⠀⠀⠀⠐⠀⠃⠀⠙⢷⣿⣿⣿⣿⣾⣿⣿⣦⡙ <br><br>"+
+            "               SEE YOU IN FEB 14 LOVEE MWAA MWAA! <br><br>" +
+            "                        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢎⠱⠊⡱⠀⠀⠀⠀⠀⠀" +
+            "                ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡠⠤⠒⠒⠒⠒⠤⢄⣑⠁⠀⠀⠀⠀⠀⠀⠀⠀" +
+            "                ⠀⠀⠀⠀⠀⠀⠀⢀⡤⠒⠝⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠲⢄⡀⠀⠀⠀⠀⠀" +
+            "                ⠀⠀⠀⠀⠀⢀⡴⠋⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⢠⣢⠐⡄⠀⠉⠑⠒⠒⠒⣄" +
+            "                ⠀⠀⠀⣀⠴⠋⠀⠀⠀⡎⢀⣘⠿⠀⠀⢠⣀⢄⡦⠀⣛⣐⢸⠀⠀⠀⠀⠀⠀⢘" +
+            "                ⡠⠒⠉⠀⠀⠀⠀⠀⡰⢅⠣⠤⠘⠀⠀⠀⠀⠀⠀⢀⣀⣤⡋⠙⠢⢄⣀⣀⡠⠊" +
+            "                ⢇⠀⠀⠀⠀⠀⢀⠜⠁⠀⠉⡕⠒⠒⠒⠒⠒⠛⠉⠹⡄⣀⠘⡄⠀⠀⠀⠀⠀⠀" +
+            "                ⠀⠑⠂⠤⠔⠒⠁⠀⠀⡎⠱⡃⠀⠀⡄⠀⠄⠀⠀⠠⠟⠉⡷⠁⠀⠀⠀⠀⠀⠀" +
+            "                ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⠤⠤⠴⣄⡸⠤⣄⠴⠤⠴⠄⠼⠀⠀⠀⠀⠀⠀⠀⠀<br><br>" +
+            "               ~♡♡♡~ I LOVE YOU ALWAYSS! ~♡♡♡~ <br>" +
+            "            <span class='lin'>greg@dev</span>:<span class='lin-1'>~</span>$"
+        )
+    })
+
+    noInp.addEventListener('click', async function () 
+    {  
+        await fetchingDelay()
+
+        document.getElementById('terminal-texts').insertAdjacentHTML("beforeend", 
+            "<br>" +
+            "            ERROR: 400 Invalid parameters. <br>" +
+            "            The 'answer' parameter is required and must be 'Yes'. Received 'No' value <br><br>" +
+            "            Suggestions:<br>" +
+            "            - Ensure that the 'Yes' option is clickable.<br>" +
+            "            - Please select 'Yes'. <br>" +
+            "            <span class='lin'>greg@dev</span>:<span class='lin-1'>~</span>$"
+        )
+    })
+
+    function dragElement(elmnt) 
+    {
+        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0
+
+        if (document.getElementById(elmnt.id + '-header'))
+        {
+            document.getElementById(elmnt.id + '-header').onmousedown = dragMouseDown
+        } 
+        else
+        {
+            elmnt.onmousedown = dragMouseDown
+        }
+
+        function dragMouseDown(e) 
+        {
+            e = e || window.event
+            e.preventDefault()
+
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+
+            document.onmouseup = closeDragElement
+            document.onmousemove = elementDrag
+        }
+
+        function elementDrag(e)
+        {
+            e = e || window.event
+            e.preventDefault()
+
+            pos1 = pos3 - e.clientX
+            pos2 = pos4 - e.clientY
+        
+            pos3 = e.clientX
+            pos4 = e.clientY
+
+            elmnt.style.top = (elmnt.offsetTop - pos2) + 'px'
+            elmnt.style.left = (elmnt.offsetLeft - pos1) + 'px'
+        }
+
+        function closeDragElement() 
+        {
+            document.onmouseup = null
+            document.onmousemove = null
+        }
+    }
+
+</script>
+</html>
